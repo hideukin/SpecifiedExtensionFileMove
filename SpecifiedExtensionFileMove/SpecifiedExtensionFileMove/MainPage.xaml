@@ -8,11 +8,11 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="ExecButton" Content="実行" HorizontalAlignment="Left" Margin="909,562,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.176,0.473"/>
-        <Button x:Name="SelectButton" Content="選択" HorizontalAlignment="Left" Margin="909,485,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,-0.542" Click="SelectButton_Click"/>
-        <TextBlock x:Name="SavedFolderPathLabel" HorizontalAlignment="Left" Margin="565,485,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="61" Width="312" FontSize="11"/>
-        <ListView x:Name="FoldersListView" HorizontalAlignment="Left" Height="320" Margin="80,81,0,0" VerticalAlignment="Top" Width="400" BorderBrush="Black" BorderThickness="1" AllowDrop="True"/>
-        <ListView x:Name="PickupListView" HorizontalAlignment="Left" Height="321" Margin="565,81,0,0" VerticalAlignment="Top" Width="395" BorderBrush="Black" BorderThickness="1"/>
+        <Button x:Name="ExecButton" Content="実行" HorizontalAlignment="Left" Margin="909,560,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.176,0.473" Click="ExecButton_Click"/>
+        <Button x:Name="SelectButton" Content="選択" HorizontalAlignment="Left" Margin="909,480,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,-0.542" Click="SelectButton_Click"/>
+        <TextBlock x:Name="SavedFolderPathLabel" HorizontalAlignment="Left" Margin="560,480,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="61" Width="312" FontSize="12"/>
+        <ListView x:Name="FoldersListView" HorizontalAlignment="Left" Height="320" Margin="80,81,0,0" VerticalAlignment="Top" Width="400" BorderBrush="Black" BorderThickness="1" Drop="FoldersListView_Drop" DragOver="FoldersListView_DragOver" AllowDrop="True" CanDragItems="True" FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+        <ListView x:Name="PickupListView" HorizontalAlignment="Left" Height="321" Margin="565,81,0,0" VerticalAlignment="Top" Width="395" BorderBrush="Black" BorderThickness="1" FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="80,56,0,0" TextWrapping="Wrap" Text="フォルダ一覧" VerticalAlignment="Top"/>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="565,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top">
             <Run Text="ピックアップファイル"/>
@@ -20,6 +20,16 @@
             <LineBreak/>
             <Run/>
         </TextBlock>
+        <CheckBox x:Name="CopyCheckBox" Content="コピー" HorizontalAlignment="Left" Margin="784,560,0,0" VerticalAlignment="Top" MinWidth="70"/>
+        <CheckBox x:Name="ZipCheckBox" Content="zip" HorizontalAlignment="Left" Margin="80,560,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
+        <CheckBox x:Name="Mp4CheckBox" Content="mp4" HorizontalAlignment="Left" Margin="239,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
+        <CheckBox x:Name="WmvCheckBox" Content="wmv" HorizontalAlignment="Left" Margin="320,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
+        <CheckBox x:Name="PngCheckBox" Content="png" HorizontalAlignment="Left" Margin="161,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
+        <CheckBox x:Name="JpgCheckBox" Content="jpg" HorizontalAlignment="Left" Margin="80,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
+        <CheckBox x:Name="AviCheckBox" Content="avi" HorizontalAlignment="Left" Margin="80,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
+        <CheckBox x:Name="MkvCheckBox" Content="mkv" HorizontalAlignment="Left" Margin="161,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="18" Margin="560,457,0,0" TextWrapping="Wrap" Text="保存先フォルダ" VerticalAlignment="Top" Width="273"/>
+        <TextBox x:Name="SpecifiedTextBox" HorizontalAlignment="Left" Margin="161,560,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="319"/>
 
     </Grid>
 </Page>
