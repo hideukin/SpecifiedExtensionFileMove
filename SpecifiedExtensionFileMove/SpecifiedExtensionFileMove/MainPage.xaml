@@ -28,8 +28,10 @@
         <CheckBox x:Name="JpgCheckBox" Content="jpg" HorizontalAlignment="Left" Margin="80,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
         <CheckBox x:Name="AviCheckBox" Content="avi" HorizontalAlignment="Left" Margin="80,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
         <CheckBox x:Name="MkvCheckBox" Content="mkv" HorizontalAlignment="Left" Margin="161,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="18" Margin="560,457,0,0" TextWrapping="Wrap" Text="保存先フォルダ" VerticalAlignment="Top" Width="273"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="18" Margin="560,450,0,0" TextWrapping="Wrap" Text="保存先フォルダ" VerticalAlignment="Top" Width="273"/>
         <TextBox x:Name="SpecifiedTextBox" HorizontalAlignment="Left" Margin="161,560,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="319"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Height="18" Margin="80,450,0,0" TextWrapping="Wrap" Text="ピックアップ対象拡張子" VerticalAlignment="Top" Width="151"/>
+        <CheckBox x:Name="DeleteFolderCheckBox" Content="元フォルダ削除" HorizontalAlignment="Left" Margin="560,560,0,0" VerticalAlignment="Top" MinWidth="70"/>
 
     </Grid>
 </Page>
