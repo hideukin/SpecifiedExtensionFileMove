@@ -21,18 +21,18 @@
             <Run/>
         </TextBlock>
         <CheckBox x:Name="CopyCheckBox" Content="コピー" HorizontalAlignment="Left" Margin="760,560,0,0" VerticalAlignment="Top" MinWidth="70"/>
-        <CheckBox x:Name="ZipCheckBox" Content="zip" HorizontalAlignment="Left" Margin="40,560,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
-        <CheckBox x:Name="Mp4CheckBox" Content="mp4" HorizontalAlignment="Left" Margin="200,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
-        <CheckBox x:Name="WmvCheckBox" Content="wmv" HorizontalAlignment="Left" Margin="280,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
-        <CheckBox x:Name="PngCheckBox" Content="png" HorizontalAlignment="Left" Margin="120,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
-        <CheckBox x:Name="JpgCheckBox" Content="jpg" HorizontalAlignment="Left" Margin="40,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
-        <CheckBox x:Name="AviCheckBox" Content="avi" HorizontalAlignment="Left" Margin="40,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
-        <CheckBox x:Name="MkvCheckBox" Content="mkv" HorizontalAlignment="Left" Margin="120,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70"/>
+        <CheckBox x:Name="ZipCheckBox" Content="zip" HorizontalAlignment="Left" Margin="40,560,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
+        <CheckBox x:Name="Mp4CheckBox" Content="mp4" HorizontalAlignment="Left" Margin="200,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
+        <CheckBox x:Name="WmvCheckBox" Content="wmv" HorizontalAlignment="Left" Margin="280,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
+        <CheckBox x:Name="PngCheckBox" Content="png" HorizontalAlignment="Left" Margin="120,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
+        <CheckBox x:Name="JpgCheckBox" Content="jpg" HorizontalAlignment="Left" Margin="40,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
+        <CheckBox x:Name="AviCheckBox" Content="avi" HorizontalAlignment="Left" Margin="40,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
+        <CheckBox x:Name="MkvCheckBox" Content="mkv" HorizontalAlignment="Left" Margin="120,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="18" Margin="540,450,0,0" TextWrapping="Wrap" Text="保存先フォルダ" VerticalAlignment="Top" Width="273"/>
-        <TextBox x:Name="SpecifiedTextBox" HorizontalAlignment="Left" Margin="120,560,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="319"/>
+        <TextBox x:Name="SpecifiedTextBox" HorizontalAlignment="Left" Margin="120,560,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="319" LostFocus="SpecifiedTextBox_LostFocus"/>
         <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Height="18" Margin="40,450,0,0" TextWrapping="Wrap" Text="ピックアップ対象拡張子" VerticalAlignment="Top" Width="151"/>
         <CheckBox x:Name="DeleteFolderCheckBox" Content="元フォルダ削除" HorizontalAlignment="Left" Margin="540,560,0,0" VerticalAlignment="Top" MinWidth="70"/>
-        <CheckBox x:Name="SubFoldercheckBox" Content="サブフォルダーも含めてピックアップする" HorizontalAlignment="Left" Margin="40,360,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="SubFoldercheckBox" Content="サブフォルダーも含めてピックアップする" HorizontalAlignment="Left" Margin="40,360,0,0" VerticalAlignment="Top" Click="ExtensionCheckBoxes_Click"/>
         <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="120,590,0,0" TextWrapping="Wrap" Text="※ カンマ区切りで入力 (例: 「exe,msi」 など)" VerticalAlignment="Top"/>
 
     </Grid>
