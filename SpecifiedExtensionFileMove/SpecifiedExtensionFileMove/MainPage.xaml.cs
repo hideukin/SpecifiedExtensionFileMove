@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
 
@@ -80,7 +73,7 @@ namespace SpecifiedExtensionFileMove
                     if (SpecifiedTextBox.Text != string.Empty)
                     {
                         string[] lines = SpecifiedTextBox.Text.Split(',');
-                        foreach(string data in lines)
+                        foreach (string data in lines)
                         {
                             patterns.Add("." + data.Trim());
                         }
@@ -89,12 +82,12 @@ namespace SpecifiedExtensionFileMove
                     // searchOption オプション
                     // AllDirectories をセットすると、サブフォルダーも検索する
                     // TopDirectoryOnly で直下のフォルダのみ検索する
-                    var searchOption = SearchOption.TopDirectoryOnly;
+                    var searchOption = (bool)SubFoldercheckBox.IsChecked ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
                     var files = Directory.EnumerateFiles(path, "*.*", searchOption);
 
                     var filteringFile = files.Where(file => patterns.Any(pattern => file.ToLower().EndsWith(pattern))).ToArray();
-                    foreach(string filePath in filteringFile)
+                    foreach (string filePath in filteringFile)
                     {
                         fileList.Add(filePath);
                     }
@@ -127,7 +120,6 @@ namespace SpecifiedExtensionFileMove
             {
                 await new Windows.UI.Popups.MessageDialog("保存先フォルダが指定されていません。", "保存先フォルダ存在確認").ShowAsync();
                 return;
-
             }
 
             // 保存先フォルダ存在確認
