@@ -164,17 +164,41 @@ namespace SpecifiedExtensionFileMove
             {
                 if (res.Label == "継続")
                 {
-                    var copyMode = (bool)CopyCheckBox.IsChecked;
-                    foreach (object item in PickupListView.Items)
+                    try
                     {
-                        var targetPath = SavedFolderPathLabel.Text + "\\" + Path.GetFileName(item.ToString());
-                        if (copyMode)
+                        var copyMode = (bool)CopyCheckBox.IsChecked;
+                        foreach (object item in PickupListView.Items)
                         {
-                            File.Copy(item.ToString(), targetPath, true);
+                            var targetPath = SavedFolderPathLabel.Text + "\\" + Path.GetFileName(item.ToString());
+                            if (copyMode)
+                            {
+                                File.Copy(item.ToString(), targetPath, true);
+                            }
+                            else
+                            {
+                                File.Move(item.ToString(), targetPath);
+                            }
                         }
-                        else
+                    }
+                    catch
+                    {
+                        await new Windows.UI.Popups.MessageDialog("ファイル移動に失敗しました。\n既にファイルが存在していないか、ファイルがロックされていないか確認してください。", "例外").ShowAsync();
+                        return;
+                    }
+
+                    if ((bool)DeleteFolderCheckBox.IsChecked)
+                    {
+                        try
                         {
-                            File.Move(item.ToString(), targetPath);
+                            foreach (object item in FoldersListView.Items)
+                            {
+                                Directory.Delete(item.ToString(), true);
+                            }
+                        }
+                        catch
+                        {
+                            await new Windows.UI.Popups.MessageDialog("フォルダ削除に失敗しました。\nファイルがロックされていないか確認してください。", "例外").ShowAsync();
+                            return;
                         }
                     }
                     await new Windows.UI.Popups.MessageDialog("完了しました。", "実行結果").ShowAsync();
@@ -182,11 +206,13 @@ namespace SpecifiedExtensionFileMove
                 else
                 {
                     await new Windows.UI.Popups.MessageDialog("処理を中断しました。", "キャンセル").ShowAsync();
+                    return;
                 }
             }
             catch
             {
-                await new Windows.UI.Popups.MessageDialog("ファイル移動に失敗しました。\n既にファイルが存在していないか、ファイルがロックされていないか確認してください。", "例外").ShowAsync();
+                await new Windows.UI.Popups.MessageDialog("システムエラーが発生しました。", "例外").ShowAsync();
+                return;
             }
         }
     }
