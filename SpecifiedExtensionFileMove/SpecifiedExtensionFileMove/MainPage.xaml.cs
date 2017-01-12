@@ -53,49 +53,78 @@ namespace SpecifiedExtensionFileMove
                 var items = await e.DataView.GetStorageItemsAsync();
                 var folderPaths = items.Where(x => Directory.Exists(x.Path)).Select(x => x.Path).ToArray();
                 FoldersListView.ItemsSource = folderPaths;
-
-                var fileList = new List<string>();
-
-                // フォルダを展開する
-                foreach (string path in folderPaths)
-                {
-                    // チェックする拡張子の格納
-                    List<string> patterns = new List<string>();
-                    if ((bool)AviCheckBox.IsChecked) { patterns.Add(".avi"); }
-                    if ((bool)MkvCheckBox.IsChecked) { patterns.Add(".mkv"); }
-                    if ((bool)Mp4CheckBox.IsChecked) { patterns.Add(".mp4"); }
-                    if ((bool)WmvCheckBox.IsChecked) { patterns.Add(".wmv"); }
-                    if ((bool)JpgCheckBox.IsChecked) { patterns.Add(".jpg"); }
-                    if ((bool)PngCheckBox.IsChecked) { patterns.Add(".png"); }
-                    if ((bool)ZipCheckBox.IsChecked) { patterns.Add(".zip"); }
-
-                    // 拡張子テキストボックスに設定されている拡張子の格納
-                    if (SpecifiedTextBox.Text != string.Empty)
-                    {
-                        string[] lines = SpecifiedTextBox.Text.Split(',');
-                        foreach (string data in lines)
-                        {
-                            patterns.Add("." + data.Trim());
-                        }
-                    }
-
-                    // searchOption オプション
-                    // AllDirectories をセットすると、サブフォルダーも検索する
-                    // TopDirectoryOnly で直下のフォルダのみ検索する
-                    var searchOption = (bool)SubFoldercheckBox.IsChecked ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-
-                    var files = Directory.EnumerateFiles(path, "*.*", searchOption);
-
-                    var filteringFile = files.Where(file => patterns.Any(pattern => file.ToLower().EndsWith(pattern))).ToArray();
-                    foreach (string filePath in filteringFile)
-                    {
-                        fileList.Add(filePath);
-                    }
-                }
-
-                // ファイル一覧を格納
-                PickupListView.ItemsSource = fileList;
+                SetPickupListView(folderPaths);
             }
+        }
+
+        /// <summary>
+        /// PickupListViewにファイルパスをセットする
+        /// </summary>
+        /// <param name="folderPaths">フォルダパスリスト</param>
+        private void SetPickupListView(string[] folderPaths)
+        {
+            var fileList = new List<string>();
+            List<string> patterns = GetPatternFromExtensions();
+
+            // searchOption オプション [ AllDirectories…サブフォルダーも検索する / TopDirectoryOnly…直下のフォルダのみ検索する ]
+            var searchOption = (bool)SubFoldercheckBox.IsChecked ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+
+            // フォルダを展開する
+            foreach (string path in folderPaths)
+            {
+                var files = Directory.EnumerateFiles(path, "*.*", searchOption);
+                var filteringFile = files.Where(file => patterns.Any(pattern => file.ToLower().EndsWith(pattern))).ToArray();
+
+                foreach (string filePath in filteringFile)
+                {
+                    fileList.Add(filePath);
+                }
+            }
+            // ファイル一覧を格納
+            PickupListView.ItemsSource = fileList;
+        }
+
+        /// <summary>
+        /// 拡張子パターンの取得
+        /// </summary>
+        /// <returns>パターンリスト</returns>
+        private List<string> GetPatternFromExtensions()
+        {
+            // チェックする拡張子の格納
+            List<string> patterns = new List<string>();
+
+            // 拡張子チェックボックスの格納
+            CheckBox[] extensionCheckBoxes = { AviCheckBox, MkvCheckBox, Mp4CheckBox, WmvCheckBox, JpgCheckBox, PngCheckBox, ZipCheckBox };
+
+            var pattern = string.Empty;
+            foreach (CheckBox checkBox in extensionCheckBoxes)
+            {
+                pattern = OnOffCheckExtensions(checkBox);
+                if (pattern != string.Empty) { patterns.Add(pattern); }
+            }
+
+            // 拡張子テキストボックスに設定されている拡張子の格納
+            if (SpecifiedTextBox.Text != string.Empty)
+            {
+                string[] lines = SpecifiedTextBox.Text.Split(',');
+                foreach (string data in lines)
+                {
+                    patterns.Add("." + data.Trim());
+                }
+            }
+            return patterns;
+        }
+
+        /// <summary>
+        /// チェックされた拡張子の格納
+        /// </summary>
+        /// <param name="checkBox">チェックボックスオブジェクト</param>
+        /// <returns>.拡張子</returns>
+        private string OnOffCheckExtensions(CheckBox checkBox)
+        {
+            var extensionString = string.Empty;
+            if ((bool)checkBox.IsChecked) { extensionString = "." + checkBox.Content.ToString(); }
+            return extensionString;
         }
 
         /// <summary>
@@ -109,7 +138,7 @@ namespace SpecifiedExtensionFileMove
         }
 
         /// <summary>
-        /// ピックアップファイルの指定フォルダへの移動もしくはコピー
+        /// 実行ボタンクリックイベントによる、ピックアップファイルの指定フォルダへの移動もしくはコピー
         /// </summary>
         /// <param name="sender">イベント発生元オブジェクト</param>
         /// <param name="e">イベントルーティング情報</param>
@@ -150,6 +179,7 @@ namespace SpecifiedExtensionFileMove
             var msg = new Windows.UI.Popups.MessageDialog("処理を継続します", "継続確認");
             msg.Commands.Add(new Windows.UI.Popups.UICommand("継続"));
             msg.Commands.Add(new Windows.UI.Popups.UICommand("キャンセル"));
+
             var res = await msg.ShowAsync();
 
             try
@@ -206,6 +236,27 @@ namespace SpecifiedExtensionFileMove
                 await new Windows.UI.Popups.MessageDialog("システムエラーが発生しました。", "例外").ShowAsync();
                 return;
             }
+        }
+
+        /// <summary>
+        /// 拡張子テキストボックスの変更イベントによる拡張子再取得
+        /// </summary>
+        /// <param name="sender">イベント発生元オブジェクト</param>
+        /// <param name="e">イベントルーティング情報</param>
+        private void ExtensionCheckBoxes_Click(object sender, RoutedEventArgs e)
+        {
+           SetPickupListView((string[])FoldersListView.ItemsSource);
+        }
+
+        /// <summary>
+        /// 拡張子テキストボックスからカーソルが離脱した際の拡張子取得
+        /// </summary>
+        /// <param name="sender">イベント発生元オブジェクト</param>
+        /// <param name="e">イベントルーティング情報</param>
+        private void SpecifiedTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            // HACK: 変更の有無をチェックして処理させることが望ましい
+                SetPickupListView((string[])FoldersListView.ItemsSource);
         }
     }
 }
