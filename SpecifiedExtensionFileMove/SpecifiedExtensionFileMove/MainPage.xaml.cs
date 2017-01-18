@@ -51,9 +51,19 @@ namespace SpecifiedExtensionFileMove
             {
                 // フォルダのパス一覧を取得する(ファイルは除外)
                 var items = await e.DataView.GetStorageItemsAsync();
-                var folderPaths = items.Where(x => Directory.Exists(x.Path)).Select(x => x.Path).ToArray();
-                FoldersListView.ItemsSource = folderPaths;
-                SetPickupListView(folderPaths);
+                var tempPaths = items.Select(x => x.Path).ToArray();
+                //List<string> folderPaths = new List<string>();
+                //    foreach (string path in tempPaths)
+                //    {
+                //        if (Directory.Exists(path))
+                //        {
+                //            folderPaths.Add(path);
+                //        }
+                //    }
+                //TODO: フォルダにセットするメソッドを用意して、別途呼び出してフォルダのみをセットするように作り変えてみること
+                var folderPaths = tempPaths;
+                    FoldersListView.ItemsSource = folderPaths;
+                    SetPickupListView(folderPaths.ToArray());
             }
         }
 
@@ -63,6 +73,9 @@ namespace SpecifiedExtensionFileMove
         /// <param name="folderPaths">フォルダパスリスト</param>
         private void SetPickupListView(string[] folderPaths)
         {
+            // フォルダパスリストが存在するかチェック
+            if (folderPaths == null) { return; }
+
             var fileList = new List<string>();
             List<string> patterns = GetPatternFromExtensions();
 
