@@ -51,17 +51,15 @@ namespace SpecifiedExtensionFileMove
             {
                 // フォルダのパス一覧を取得する(ファイルは除外)
                 var items = await e.DataView.GetStorageItemsAsync();
-                var tempPaths = items.Select(x => x.Path).ToArray();
-                //List<string> folderPaths = new List<string>();
-                //    foreach (string path in tempPaths)
-                //    {
-                //        if (Directory.Exists(path))
-                //        {
-                //            folderPaths.Add(path);
-                //        }
-                //    }
-                //TODO: フォルダにセットするメソッドを用意して、別途呼び出してフォルダのみをセットするように作り変えてみること
-                var folderPaths = tempPaths;
+
+                var folderPaths = new List<string>();
+                foreach (var item in items)
+                {
+                    if (item is Windows.Storage.IStorageFolder)
+                    {
+                        folderPaths.Add(item.Path);
+                    }
+                }
                     FoldersListView.ItemsSource = folderPaths;
                     SetPickupListView(folderPaths.ToArray());
             }
