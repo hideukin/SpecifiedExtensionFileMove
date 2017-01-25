@@ -24,6 +24,7 @@
         <CheckBox x:Name="ZipCheckBox" Content="zip" HorizontalAlignment="Left" Margin="40,560,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
         <CheckBox x:Name="Mp4CheckBox" Content="mp4" HorizontalAlignment="Left" Margin="200,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
         <CheckBox x:Name="WmvCheckBox" Content="wmv" HorizontalAlignment="Left" Margin="280,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
+        <CheckBox x:Name="IsoCheckBox" Content="iso" HorizontalAlignment="Left" Margin="360,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
         <CheckBox x:Name="PngCheckBox" Content="png" HorizontalAlignment="Left" Margin="120,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
         <CheckBox x:Name="JpgCheckBox" Content="jpg" HorizontalAlignment="Left" Margin="40,520,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>
         <CheckBox x:Name="AviCheckBox" Content="avi" HorizontalAlignment="Left" Margin="40,480,0,0" VerticalAlignment="Top" Width="25" MinWidth="70" Click="ExtensionCheckBoxes_Click"/>

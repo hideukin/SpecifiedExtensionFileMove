@@ -74,6 +74,8 @@ namespace SpecifiedExtensionFileMove
             // フォルダパスリストが存在するかチェック
             if (folderPaths == null) { return; }
 
+            // TODO: 個別にnull除外が必要
+
             var fileList = new List<string>();
             List<string> patterns = GetPatternFromExtensions();
 
@@ -83,12 +85,19 @@ namespace SpecifiedExtensionFileMove
             // フォルダを展開する
             foreach (string path in folderPaths)
             {
-                var files = Directory.EnumerateFiles(path, "*.*", searchOption);
-                var filteringFile = files.Where(file => patterns.Any(pattern => file.ToLower().EndsWith(pattern))).ToArray();
-
-                foreach (string filePath in filteringFile)
+                try
                 {
-                    fileList.Add(filePath);
+                    var files = Directory.EnumerateFiles(path, "*.*", searchOption);
+                    var filteringFile = files.Where(file => patterns.Any(pattern => file.ToLower().EndsWith(pattern))).ToArray();
+
+                    foreach (string filePath in filteringFile)
+                    {
+                        fileList.Add(filePath);
+                    }
+                }
+                catch (System.UnauthorizedAccessException)
+                {
+                    // アクセスできなかった場合、例外を無視する
                 }
             }
             // ファイル一覧を格納
@@ -105,7 +114,7 @@ namespace SpecifiedExtensionFileMove
             List<string> patterns = new List<string>();
 
             // 拡張子チェックボックスの格納
-            CheckBox[] extensionCheckBoxes = { AviCheckBox, MkvCheckBox, Mp4CheckBox, WmvCheckBox, JpgCheckBox, PngCheckBox, ZipCheckBox };
+            CheckBox[] extensionCheckBoxes = { AviCheckBox, MkvCheckBox, Mp4CheckBox, WmvCheckBox, IsoCheckBox, JpgCheckBox, PngCheckBox, ZipCheckBox };
 
             var pattern = string.Empty;
             foreach (CheckBox checkBox in extensionCheckBoxes)
